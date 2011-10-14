@@ -1,0 +1,9 @@
+{
+	"name": "Digitally Imported",
+	"version": "1.0",
+	"description": "Play DI.fm in Chrome",
+	"background_page": "di.html",
+	"permissions": [
+		"http://www.di.fm/*"
+	]
+}
