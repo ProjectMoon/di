@@ -1,28 +1,53 @@
 (function() {
+	//the exported DI API.
+	var di = null;
+	
+	function updateTrack(stationName) {
+		di.getStation(stationName, function(station) {
+			UI.setInfo(station.name, station.playing);
+		});
+	}
+	
 	function bindEvents() {
-		$('.stream').live('click', function() {
-			var plsURL = $(this).data('stream');
-			UI.setSelectedStation(this);
+		$('.stream').click(function() {
+			var plsURL = $(this).attr('data-pls');
+			var stationName = $(this).attr('data-station');
+			UI.setSelectedID(this);
+			UI.setSelectedStation(stationName);
+			updateTrack(stationName);
+			Player.play('http://72.26.204.32:80/trance_hi?79de7d9c99d2de1');
+		});
+		
+		$('#play').click(function() {
+			UI.showPause();
+			Player.resume();
+			updateTrack(UI.getSelectedStation());
+		});
+		
+		$('#pause').click(function() {
+			UI.showPlay();
+			Player.pause();
 		});
 	}
 
 	function restoreState() {
-		UI.refreshSelectedStation();
-		
-		/*
-		var state = Player.getStatus();
-		
-		if (state == 'playing') {
-			UI.setIcon('pause.png');
+		UI.refreshSelectedID();
+			
+		if (Player.getStatus() == 'playing') {
+			UI.showPause();
 		}
 		else {
-			UI.setIcon('play.png');
+			UI.showPlay();
 		}
-		*/
+		
+		//set currently playing info.
+		updateTrack(UI.getSelectedStation());
 	}
 
 	$(function() {
-		DI.exportAPI(function(di) {
+		DI.exportAPI(function(api) {
+			di = api; //so it can be used elsewhere.
+			
 			di.getStations(function(stations) {
 				UI.createDOM(stations);
 				restoreState();

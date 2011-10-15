@@ -43,6 +43,14 @@ body {
 	top: 3px;
 }
 
+#play {
+	display: none;
+}
+
+#pause {
+	display: none;
+}
+
 #trackContainer {
 	overflow: hidden;
 	height: 100%;
@@ -50,13 +58,28 @@ body {
 	background: #85A7DE;
 	border: 1px solid #3864AB;
 	box-sizing: border-box;
+	font-family: "courier new";
+	font-weight: bold;
+}
+
+#station {
+	position: relative;
+	top: 7px;
+	padding-left: 3px;
+	float: left;
+}
+
+#sep {
+	position: relative;
+	top: 7px;
+	float: left;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 #track {
 	position: relative;
 	top: 7px;
-	font-family: "courier new";
-	font-weight: bold;
 }
 
 #stationList {

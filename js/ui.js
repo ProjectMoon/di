@@ -8,10 +8,13 @@ var UI = (function() {
 		
 		for (var stream in station.streams) {
 			var streamDiv = $('<div class="stream">' + stream + '</div>');
-			streamDiv.data('stream', station.streams[stream]);
+			
+			streamDiv.attr('data-pls', station.streams[stream]);
+			streamDiv.attr('data-station', station.name);
 			
 			var id = station.name.replace(/ /g, '') + stream;
 			streamDiv.attr('id', id);
+			
 			s.append(streamDiv);
 		}
 		
@@ -27,23 +30,50 @@ var UI = (function() {
 		});
 	}
 	
-	ui.setIcon = function(img) {
-		$('#controls').empty();
-		$('#controls').append('<img src="' + img + '" />');
-	}
-
-	ui.setSelectedStation = function(elem) {
+	ui.setSelectedID = function(elem) {
 		$('.stream').removeClass('selected');
 		$(elem).addClass('selected');
-		localStorage["UISelectedStation"] = '#' + $(elem).attr('id');
+		localStorage["UISelectedID"] = '#' + $(elem).attr('id');
 	}
 
-	ui.getSelectedStation = function() {
-		return localStorage["UISelectedStation"];
+	ui.getSelectedID = function() {
+		return localStorage["UISelectedID"];
 	}
 	
-	ui.refreshSelectedStation = function() {
+	ui.refreshSelectedID = function() {
 		ui.setSelectedStation(ui.getSelectedStation());
+	}
+	
+	ui.setSelectedStation = function(stationName) {
+		localStorage['UISelectedStation'] = stationName;
+	}
+	
+	ui.getSelectedStation = function() {
+		return localStorage['UISelectedStation']
+	}
+	
+	ui.setInfo = function(station, track) {
+		$('#station').text(station);
+		var marquee = $('<marquee></marquee>');
+		marquee.text(track);
+		$('#track').empty().append(marquee);
+	}
+	
+	ui.getInfo = function() {
+		return {
+			station: $('#station').text(),
+			track: $('#track').children('marquee').text()
+		};
+	}
+	
+	ui.showPlay = function() {
+		$('#pause').hide();
+		$('#play').show();
+	}
+	
+	ui.showPause = function() {
+		$('#play').hide();
+		$('#pause').show();
 	}
 	
 	return ui;
