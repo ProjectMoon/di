@@ -66,15 +66,17 @@ DI.__Regular = (function() {
 		streamTR.find('a[href^="http://listen.di.fm/"]').each(function(i, stream) {
 			var href = $(stream).attr('href');
 			
-			//public3 = mp3 (96k), public2 = aacPlus (32k), public5 = windows media (40k)
+			//public3 = mp3 (96k)
+			//public2 = aacPlus (32k)
+			//public5 = windows media (40k)
 			if (href.indexOf('public3') !== -1) {
-				streams['96k'] = $(stream).attr('href');
+				streams['96k'] = href;
 			}
 			else if (href.indexOf('public2') !== -1) {
-				streams['32k'] = $(stream).attr('href');
+				streams['32k'] = href;
 			}
 			else if (href.indexOf('public5') !== -1) {
-				streams['40k'] = $(stream).attr('href');
+				streams['40k'] = href
 			}
 		});
 		
@@ -142,10 +144,10 @@ DI.__Premium = (function() {
 	var diHome = 'http://www.di.fm';
 	var channelImg = 'images/live/radio_channels_edm.gif';
 	var spacer = 'images/live/spacer.gif';
+	var myfavorites = 'images/chan_flags/di_myfavorite.gif';
 	
 	var imgMap = {
 		'oldschoolacid.gif': 'Oldschool Acid',
-		'di_myfavorite.gif': 'My Favorites',
 		'classicvocaltrance.gif': 'Classic Vocal Trance',
 		'ukgarage.gif': 'UK Garage'
 	};
@@ -170,15 +172,23 @@ DI.__Premium = (function() {
 			stationName = imgMap[stationName];
 		}
 		else {
-			stationName = stationNameTR.find('.channel_title').html();
-			stationName = stationName.replace('<br>', ' ');
+			//try My Favorites. it's a special case.
+			stationName = stationNameTR.find('img[src="' + myfavorites + '"]');
+			
+			if (typeof stationName !== 'undefined') {
+				stationName = 'My Favorites';
+			}
+			else {
+				//it's a text station name.
+				stationName = stationNameTR.find('.channel_title').html();
+				stationName = stationName.replace('<br>', ' ');
+			}
 		}
 		
 		var streams = {};
-		streamTR.find('a[href^="/listen/"]').each(function(i, stream) {
+		streamTR.find('a[href^="/listen"]').each(function(i, stream) {
 			var href = $(stream).attr('href');
 			
-			//public3 = mp3 (96k), public2 = aacPlus (32k), public5 = windows media (40k)
 			if (href.indexOf('premium.pls') !== -1) {
 				streams['256k'] = href;
 			}
@@ -186,10 +196,10 @@ DI.__Premium = (function() {
 				streams['128k'] = href;
 			}
 			else if (href.indexOf('128k.asx') !== -1) {
-				streams['128k-win'] = href;
+				streams['128w'] = href;
 			}
 			else if (href.indexOf('56k.asx') !== -1) {
-				streams['64k-win'] = href; //yes, the link is 56k.asx
+				streams['64w'] = href; //yes, the link is 56k.asx
 			}
 			else if (href.indexOf('64k.pls') !== -1) {
 				streams['64k'] = href;
