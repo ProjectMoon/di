@@ -6,6 +6,9 @@ function createStationHTML(station) {
 	for (var stream in station.streams) {
 		var streamDiv = $('<div class="stream">' + stream + '</div>');
 		streamDiv.data('stream', station.streams[stream]);
+		
+		var id = station.name.replace(/ /g, '') + stream;
+		streamDiv.attr('id', id);
 		s.append(streamDiv);
 	}
 	
@@ -14,9 +17,16 @@ function createStationHTML(station) {
 
 function bindEvents() {
 	$('.stream').live('click', function() {
-		var pls = $(this).data('stream');
-		alert(pls);
+		var plsURL = $(this).data('stream');
+		$('.stream').removeClass('selected');
+		$(this).addClass('selected');
+		
+		localStorage["selected"] = $(this).attr('id');
 	});
+}
+
+function restoreState() {
+	$('#' + localStorage["selected"]).addClass('selected');
 }
 
 $(function() {
@@ -29,6 +39,7 @@ $(function() {
 			});
 			
 			bindEvents();
+			restoreState();
 		});
 	});
 });
