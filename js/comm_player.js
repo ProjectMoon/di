@@ -20,6 +20,13 @@ var Player = (function() {
 		return bpDocument.getElementById('audioPlayer');
 	}
 	
+	//bind some audio player events.
+	getPlayer().addEventListener('playing', function() {
+		if (player.onPlay != null && typeof player.onPlay === 'function') {
+			player.onPlay();
+		}
+	});
+	
 	/**
 	 * Tells the player to play the specified URL.
 	 */
@@ -27,13 +34,14 @@ var Player = (function() {
 		var diPlayer = getPlayer();
 		diPlayer.src = url;
 		diPlayer.play();
+		player.setURL(url);
 		player.setStatus('playing');
 	}
 	
 	/**
 	 * Pauses the player.
 	 */
-	player.pause = function(callback) {
+	player.pause = function() {
 		var diPlayer = getPlayer();
 		diPlayer.pause();
 		player.setStatus('paused');
@@ -44,6 +52,8 @@ var Player = (function() {
 	 */
 	player.resume = function() {
 		var diPlayer = getPlayer();
+		diPlayer.src = ''; //clear source so we catch up.
+		diPlayer.src = player.getURL();
 		diPlayer.play();
 		player.setStatus('playing');
 	}
@@ -61,12 +71,19 @@ var Player = (function() {
 	player.getStatus = function() {
 		return localStorage['PlayerStatus'];
 	}
+		
+	/**
+	 * Set the current URL to play.
+	 */
+	player.setURL = function(url) {
+		localStorage['PlayerURL'] = url;
+	}
 	
 	/**
-	 * Gets an object holding the current station and track.
+	 * Retrieve the URL that is playing or was last played.
 	 */
-	player.getInfo = function() {
-		return localStorage['PlayerInfo'];
+	player.getURL = function() {
+		return localStorage['PlayerURL'];
 	}
 	
 	return player;	

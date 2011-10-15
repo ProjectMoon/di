@@ -41,7 +41,7 @@ var UI = (function() {
 	}
 	
 	ui.refreshSelectedID = function() {
-		ui.setSelectedStation(ui.getSelectedStation());
+		ui.setSelectedID(ui.getSelectedID());
 	}
 	
 	ui.setSelectedStation = function(stationName) {
@@ -68,12 +68,20 @@ var UI = (function() {
 	
 	ui.showPlay = function() {
 		$('#pause').hide();
+		$('#buffering').hide();
 		$('#play').show();
 	}
 	
 	ui.showPause = function() {
 		$('#play').hide();
+		$('#buffering').hide();
 		$('#pause').show();
+	}
+	
+	ui.showBuffering = function() {
+		$('#play').hide();
+		$('#pause').hide();
+		$('#buffering').show();
 	}
 	
 	return ui;

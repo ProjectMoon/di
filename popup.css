@@ -51,6 +51,14 @@ body {
 	display: none;
 }
 
+#buffering {
+	display: none;
+	color: white;
+	font-weight: bold;
+	position: relative;
+	top: 7px;
+}
+
 #trackContainer {
 	overflow: hidden;
 	height: 100%;
