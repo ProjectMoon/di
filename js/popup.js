@@ -4,10 +4,19 @@ function createStationHTML(station) {
 	s.append('<div class="stationName">' + station.name + '</div>');
 	
 	for (var stream in station.streams) {
-		s.append('<div class="stream">' + stream + '</div>');
+		var streamDiv = $('<div class="stream">' + stream + '</div>');
+		streamDiv.data('stream', station.streams[stream]);
+		s.append(streamDiv);
 	}
 	
 	return s;
+}
+
+function bindEvents() {
+	$('.stream').live('click', function() {
+		var pls = $(this).data('stream');
+		alert(pls);
+	});
 }
 
 $(function() {
@@ -18,6 +27,8 @@ $(function() {
 				var html = createStationHTML(station);
 				$('#stationList').append(html);
 			});
+			
+			bindEvents();
 		});
 	});
 });

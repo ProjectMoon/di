@@ -144,7 +144,6 @@ DI.__Premium = (function() {
 	var diHome = 'http://www.di.fm';
 	var channelImg = 'images/live/radio_channels_edm.gif';
 	var spacer = 'images/live/spacer.gif';
-	var myfavorites = 'images/chan_flags/di_myfavorite.gif';
 	
 	var imgMap = {
 		'oldschoolacid.gif': 'Oldschool Acid',
@@ -165,24 +164,29 @@ DI.__Premium = (function() {
 		//some reason, that doesn't work. luckily all of the spacer.gifs
 		//are relative paths while the images we want are absolute.
 		var currentlyPlaying = trackInfoTR.find('span.text_trackname').text().trim();
-		var stationName = stationNameTR.find('img[src^="http://www.di.fm/"]').attr('src');
+		var stationNameEl = stationNameTR.find('.channel_title');//'img[src^="http://www.di.fm/"]').attr('src');
 		
-		if (typeof stationName !== 'undefined') {
-			stationName = stationName.match(/\/([^\/]*.gif)/)[1];
-			stationName = imgMap[stationName];
-		}
-		else {
-			//try My Favorites. it's a special case.
-			stationName = stationNameTR.find('img[src="' + myfavorites + '"]');
-			
+		if (stationNameEl.children('img').length > 0) {
+			var stationName = stationNameEl.find('img[src^="http://www.di.fm/"]').attr('src');
 			if (typeof stationName !== 'undefined') {
-				stationName = 'My Favorites';
+				stationName = stationName.match(/\/([^\/]*.gif)/)[1];
+				stationName = imgMap[stationName];
 			}
 			else {
-				//it's a text station name.
-				stationName = stationNameTR.find('.channel_title').html();
-				stationName = stationName.replace('<br>', ' ');
+				//try My Favorites. it's a special case.
+				var stationName = stationNameEl.children('img[alt="My Favorites"]');
+				if (stationName.length > 0) {
+					stationName = 'My Favorites';
+				}
+				else {
+					stationName = 'Unknown';
+				}
 			}
+		}
+		else {
+			//it's a text station name.
+			stationName = stationNameEl.html();
+			stationName = stationName.replace('<br>', ' ');
 		}
 		
 		var streams = {};
