@@ -144,6 +144,8 @@ DI.__Premium = (function() {
 	var diHome = 'http://www.di.fm';
 	var channelImg = 'images/live/radio_channels_edm.gif';
 	var spacer = 'images/live/spacer.gif';
+	var imgPrefix = 'http://www.di.fm/images/live/';
+	var imgSuffix = '.gif';
 	
 	var imgMap = {
 		'oldschoolacid.gif': 'Oldschool Acid',
@@ -219,7 +221,7 @@ DI.__Premium = (function() {
 	di.getStation = function(name, callback) {
 		$.get(diHome, function(dom) {
 			var imgName = name.replace(/ /g, '').toLowerCase();
-			var stationImg = $('img[src*="' + imgName + '"]', dom);
+			var stationImg = $('img[src="' + imgPrefix + imgName + imgSuffix + '"]', dom);
 			
 			if (stationImg.length > 0) {
 				var stationNameTR = stationImg.closest('tr');
