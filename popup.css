@@ -1,0 +1,78 @@
+html {
+	padding: 0;
+	margin: 0;
+	font-family: sans-serif;
+}
+
+body {
+	width: 350px;
+	height: 400px;
+	padding: 0;
+	margin: 0;
+	
+	background-image: linear-gradient(bottom, rgb(54,54,53) 40%, rgb(82,82,82) 70%);
+	background-image: -o-linear-gradient(bottom, rgb(54,54,53) 40%, rgb(82,82,82) 70%);
+	background-image: -moz-linear-gradient(bottom, rgb(54,54,53) 40%, rgb(82,82,82) 70%);
+	background-image: -webkit-linear-gradient(bottom, rgb(54,54,53) 40%, rgb(82,82,82) 70%);
+	background-image: -ms-linear-gradient(bottom, rgb(54,54,53) 40%, rgb(82,82,82) 70%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.4, rgb(54,54,53)),
+		color-stop(0.7, rgb(82,82,82))
+	);
+}
+
+#player {
+	width: 100%;
+	background: #7A7A7A;
+	height: 35px;
+}
+
+#controls {
+	cursor: pointer;
+	width: 60px;
+	float: left;
+	text-align: center;
+}
+
+#controls img {
+	position: relative;
+	top: 3px;
+}
+
+#trackContainer {
+	overflow: hidden;
+	height: 100%;
+	background: #A7C2D1;
+	background: #85A7DE;
+	border: 1px solid #3864AB;
+	box-sizing: border-box;
+}
+
+#track {
+	position: relative;
+	top: 7px;
+}
+
+#stationList {
+	margin: 8px;
+	background: #828282;
+	border: 1px solid #696969;
+	padding: 3px;
+}
+
+.station {
+	overflow: hidden;
+}
+
+.stationName {
+	float: left;
+}
+
+.stream {
+	float: right;
+	border: 1px solid black;
+}
