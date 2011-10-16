@@ -93,13 +93,30 @@
 		//set currently playing info.
 		updateTrack(UI.getSelectedStation());
 	}
+	
+	function getStations(callback) {
+		var stations = localStorage['PopupStationList'];
+		
+		if (typeof stations !== 'undefined') {
+			stations = JSON.parse(stations);
+			setTimeout(function() {
+				callback(stations);
+			}, 0);
+		}
+		else {
+			di.getStations(function(stations) {
+				localStorage['PopupStationList'] = JSON.stringify(stations);
+				callback(stations);
+			});
+		}
+	}
 
 	//Entry point.
 	$(function() {
 		DI.exportAPI(function(api) {
 			di = api; //so it can be used elsewhere.
 			
-			di.getStations(function(stations) {
+			getStations(function(stations) {
 				UI.createDOM(stations);
 				restoreState();
 				bindEvents();
