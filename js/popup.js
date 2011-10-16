@@ -66,9 +66,11 @@
 		
 		//Pause the stream.
 		$('#pause').click(function() {
+			var info = UI.getInfo(); 
 			chrome.browserAction.setTitle({
-				title: 'Paused'
-			});			
+				title: 'DI.fm :: ' + info.station + ' (Paused)'
+			});
+			
 			Player.pause();
 		});
 	}
