@@ -22,7 +22,11 @@ DI.exportAPI = function(callback) {
 	});
 };
 
+/**
+ * Contains classes for stuff on DI.fm.
+ */
 DI.Core = (function() {
+	//Station class.
 	function Station(name, playing, streams) {
 		this.name = name;
 		this.playing = playing;
@@ -35,12 +39,15 @@ DI.Core = (function() {
 		//add communication to background page here.
 	}
 	
+	//Export everything.
 	return { Station: Station };
 })();
 
+/**
+ * Implementation of API for the regular (non-premium) site.
+ * Obtained by using DI.exportAPI function.
+ */
 DI.__Regular = (function() {
-	//non-premium implementation.
-	var di = {}; //hold the API.
 	var diHome = 'http://www.di.fm';
 	var channelImg = 'http://static.di.fm/images/live/radio_channels_edm.gif';
 	var spacer = 'http://static.di.fm/images/live/spacer.gif';
@@ -82,6 +89,9 @@ DI.__Regular = (function() {
 		
 		return new DI.Core.Station(stationName, currentlyPlaying, streams);
 	}
+	
+	//API definition.
+	var di = {};
 	
 	/**
 	 * Retrieve a Station by name (non-premium implementation).
@@ -136,11 +146,15 @@ DI.__Regular = (function() {
 		});
 	};
 	
+	//Export API
 	return di;
 })();
 
+/**
+ * Implementation of API for premium version of the website. Obtained from
+ * DI.exportAPI function.
+ */
 DI.__Premium = (function() {
-	var di = {};
 	var diHome = 'http://www.di.fm';
 	var channelImg = 'images/live/radio_channels_edm.gif';
 	var spacer = 'images/live/spacer.gif';
@@ -218,6 +232,8 @@ DI.__Premium = (function() {
 		return new DI.Core.Station(stationName, currentlyPlaying, streams);
 	}	
 	
+	//API definition.
+	var di = {};
 	di.getStation = function(name, callback) {
 		$.get(diHome, function(dom) {
 			var imgName = name.replace(/ /g, '').toLowerCase();
@@ -263,5 +279,6 @@ DI.__Premium = (function() {
 		});
 	}
 	
+	//Export API.
 	return di;
 })();
