@@ -32,7 +32,6 @@ body {
 }
 
 #controls {
-	cursor: pointer;
 	width: 60px;
 	float: left;
 	text-align: center;
@@ -44,10 +43,12 @@ body {
 }
 
 #play {
+	cursor: pointer;
 	display: none;
 }
 
 #pause {
+	cursor: pointer;
 	display: none;
 }
 
@@ -57,6 +58,7 @@ body {
 	font-weight: bold;
 	position: relative;
 	top: 7px;
+	cursor: auto;
 }
 
 #trackContainer {
