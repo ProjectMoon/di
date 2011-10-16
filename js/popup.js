@@ -24,6 +24,13 @@
 	 * all the magic is put together.
 	 */
 	function bindEvents() {
+		//Refresh buttons.
+		$('#refresh').click(function() {
+			delete localStorage['PopupPremiumStatus'];
+			delete localStorage['PopupStationList'];
+			main();
+		});
+		
 		//It goes play -> buffering -> pause.
 		//This is called automatically after the stream actually begins.
 		Player.onPlay = function() {
@@ -137,9 +144,8 @@
 			});
 		}
 	}
-
-	//Entry point.
-	$(function() {
+	
+	function main() {
 		exportAPI(function(api) {
 			di = api; //so it can be used elsewhere.
 			
@@ -147,7 +153,7 @@
 				UI.setPremiumStatus('Active');
 			}
 			else {
-				UI.setPremiumStatus('<a href="http://www.di.fm/premium/">Go Premium!</a>');
+				UI.setPremiumStatus('<a target="_blank" href="http://www.di.fm/premium/">Go Premium!</a>');
 			}
 			
 			getStations(function(stations) {
@@ -156,5 +162,10 @@
 				bindEvents();
 			});
 		});
+	}
+
+	//Entry point.
+	$(function() {
+		main();
 	});
 })();
