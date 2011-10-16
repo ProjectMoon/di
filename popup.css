@@ -129,3 +129,27 @@ body {
 .stream:hover, .stream.selected {
 	background: #488EF0;
 }
+
+#settings {
+	width: 100%;
+	padding: 4px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+#settings div {
+	display: inline-block;
+
+}
+
+#premiumActive {
+	float: right;
+	font-weight: bold;
+	color: white;
+}
+
+#premiumStatus {
+	float: right;
+	padding-left: 4px;
+	color: #51A9F0;
+}

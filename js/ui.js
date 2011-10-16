@@ -84,5 +84,9 @@ var UI = (function() {
 		$('#buffering').show();
 	}
 	
+	ui.setPremiumStatus = function(status) {
+		$('#premiumStatus').html(status);
+	}
+	
 	return ui;
 })();

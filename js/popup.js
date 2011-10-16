@@ -110,11 +110,45 @@
 			});
 		}
 	}
+	
+	function exportAPI(callback) {
+		var status = localStorage['PopupPremiumStatus'];
+		
+		if (typeof status !== 'undefined') {
+			setTimeout(function() {
+				if (status === 'premium') {
+					callback(DI.__Premium);
+				}
+				else {
+					callback(DI.__Regular);
+				}
+			}, 0);
+		}
+		else {
+			DI.exportAPI(function(api) {
+				if (api.isPremium) {
+					localStorage['PopupPremiumStatus'] = 'premium';
+				}
+				else {
+					localStorage['PopupPremiumStatus'] = 'regular';
+				}
+				
+				callback(api);
+			});
+		}
+	}
 
 	//Entry point.
 	$(function() {
-		DI.exportAPI(function(api) {
+		exportAPI(function(api) {
 			di = api; //so it can be used elsewhere.
+			
+			if (di.isPremium) {
+				UI.setPremiumStatus('Active');
+			}
+			else {
+				UI.setPremiumStatus('<a href="http://www.di.fm/premium/">Go Premium!</a>');
+			}
 			
 			getStations(function(stations) {
 				UI.createDOM(stations);

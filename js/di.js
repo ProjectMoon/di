@@ -92,6 +92,7 @@ DI.__Regular = (function() {
 	
 	//API definition.
 	var di = {};
+	di.isPremium = false;
 	
 	/**
 	 * Retrieve a Station by name (non-premium implementation).
@@ -234,6 +235,8 @@ DI.__Premium = (function() {
 	
 	//API definition.
 	var di = {};
+	di.isPremium = true;
+	
 	di.getStation = function(name, callback) {
 		$.get(diHome, function(dom) {
 			//my favorites is special case.
