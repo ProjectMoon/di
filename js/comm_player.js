@@ -27,6 +27,12 @@ var Player = (function() {
 		}
 	});
 	
+	getPlayer().addEventListener('pause', function() {
+		if (player.onPause != null && typeof player.onPause === 'function') {
+			player.onPause();
+		}
+	});	
+	
 	/**
 	 * Tells the player to play the specified URL.
 	 */

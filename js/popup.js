@@ -30,8 +30,17 @@
 			UI.showPause();
 		}
 		
+		Player.onPause = function() {
+			UI.showPlay();
+		}
+		
 		//Click on a stream to start playing it.
 		$('.stream').click(function() {
+			var info = UI.getInfo(); 
+			chrome.browserAction.setTitle({
+				title: 'DI.fm :: ' + info.station
+			});
+			
 			var plsURL = $(this).attr('data-pls');
 			var stationName = $(this).attr('data-station');
 			UI.setSelectedID(this);
@@ -45,6 +54,11 @@
 		
 		//Resume after pausing.
 		$('#play').click(function() {
+			var info = UI.getInfo(); 
+			chrome.browserAction.setTitle({
+				title: 'DI.fm :: ' + info.station
+			});
+			
 			UI.showBuffering();
 			Player.resume();
 			updateTrack(UI.getSelectedStation());
@@ -52,7 +66,9 @@
 		
 		//Pause the stream.
 		$('#pause').click(function() {
-			UI.showPlay();
+			chrome.browserAction.setTitle({
+				title: 'Paused'
+			});			
 			Player.pause();
 		});
 	}
