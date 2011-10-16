@@ -236,6 +236,16 @@ DI.__Premium = (function() {
 	var di = {};
 	di.getStation = function(name, callback) {
 		$.get(diHome, function(dom) {
+			//my favorites is special case.
+			if (name == 'My Favorites') {
+				var stationImg = $('img[alt="My Favorites"]', dom);
+				var track = stationImg.closest('tr').next().find('span.text_currently_playing');
+				var station = parseStationFromTrack(track);
+				callback(station);
+				return;
+			}
+			
+			//then we go on to try images or text names.
 			var imgName = name.replace(/ /g, '').toLowerCase();
 			var stationImg = $('img[src="' + imgPrefix + imgName + imgSuffix + '"]', dom);
 			
@@ -246,6 +256,7 @@ DI.__Premium = (function() {
 				callback(station);
 			}
 			else {
+				//everything else.
 				var table = $('img[src="' + channelImg + '"]', dom).closest('table');
 				table.find('span.text_currently_playing').each(function(i, span) {
 					var stationNameTR = $(span).closest('tr').prev();

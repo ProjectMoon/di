@@ -36,13 +36,13 @@
 		
 		//Click on a stream to start playing it.
 		$('.stream').click(function() {
-			var info = UI.getInfo(); 
-			chrome.browserAction.setTitle({
-				title: 'DI.fm :: ' + info.station
-			});
-			
 			var plsURL = $(this).attr('data-pls');
 			var stationName = $(this).attr('data-station');
+			
+			chrome.browserAction.setTitle({
+				title: 'Digitally Imported :: ' + stationName
+			});
+			
 			UI.setSelectedID(this);
 			UI.setSelectedStation(stationName);
 			updateTrack(stationName);
