@@ -1,9 +1,14 @@
 {
 	"name": "Digitally Imported Web Player",
 	"version": "1.0",
-	"description": "Play DI.fm in Chrome",
+	"description": "Play Digitally Imported radio in Chrome.",
+	"icons": {
+		"16": "di16.png",
+		"48": "di48.png",
+		"128": "di128.png"
+	},
 	"browser_action": {
-		"default_icon": "favicon-0.jpg",
+		"default_icon": "di19.png",
 		"default_popup": "popup.html",
 		"default_title": "Digitally Imported Web Player"
 	},
