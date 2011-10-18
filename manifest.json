@@ -1,6 +1,6 @@
 {
 	"name": "Digitally Imported Web Player",
-	"version": "0.9-BETA",
+	"version": "0.9",
 	"description": "Play Digitally Imported radio in Chrome.",
 	"icons": {
 		"16": "di16.png",
