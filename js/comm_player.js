@@ -21,17 +21,23 @@ var Player = (function() {
 	}
 	
 	//bind some audio player events.
-	getPlayer().addEventListener('playing', function() {
+	getPlayer().addEventListener('playing', function(e) {
 		if (player.onPlay != null && typeof player.onPlay === 'function') {
-			player.onPlay();
+			player.onPlay(e);
 		}
 	});
 	
-	getPlayer().addEventListener('pause', function() {
+	getPlayer().addEventListener('pause', function(e) {
 		if (player.onPause != null && typeof player.onPause === 'function') {
-			player.onPause();
+			player.onPause(e);
 		}
-	});	
+	});
+	
+	getPlayer().addEventListener('error', function(e) {
+		if (player.onError != null && typeof player.onError === 'function') {
+			player.onError(getPlayer().error.code);
+		}
+	});
 	
 	/**
 	 * Tells the player to play the specified URL.

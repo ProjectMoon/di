@@ -24,13 +24,37 @@
 	 * all the magic is put together.
 	 */
 	function bindEvents() {
-		//Refresh buttons.
+		//Error handling.
+		Player.onError = function(errorCode) {
+			if (errorCode === 1) {
+				alert('Stream loading aborted');
+			}
+			else if (errorCode === 2) {
+				alert('Network error');
+			}
+			else if (errorCode === 3) {
+				alert('Stream decoding error');
+			}
+			else if (errorCode === 4) {
+				alert('Stream format not supported');
+			}
+			else {
+				alert('Unknown error (error code = ' + errorCode + ')');
+			}
+		}
+		
+		$.ajaxSetup({
+			error: function(xhr, status, errorThrown) {
+				alert(status + ' - ' + errorThrown);
+			}
+		});
+		//Refresh button.
 		$('#refresh').click(function() {
 			delete localStorage['PopupPremiumStatus'];
 			delete localStorage['PopupStationList'];
 			main();
 		});
-		
+				
 		//It goes play -> buffering -> pause.
 		//This is called automatically after the stream actually begins.
 		Player.onPlay = function() {
@@ -75,7 +99,7 @@
 				}
 				else if (fileURL.indexOf('.asx') !== -1) {
 					var asx = Parser.parse('asx', fileContents);
-					var stream = pls.records[0].file;
+					var stream = asx.records[0].file;
 				}
 				else {
 					alert('Not sure how to parse file ' + fileUrl);
