@@ -50,7 +50,28 @@ var Parser = (function() {
 	 * structures and values.
 	 */
 	function parseASX(contents) {
-		//TODO: implement
+		//use jquery since this is on a webpage.
+		var xml = $(contents);
+		
+		var asxInfo = {};
+		asxInfo.version = xml.attr('version');
+		asxInfo.title = xml.children('title').text();
+		asxInfo.author = xml.children('author').text();
+		asxInfo.copyright = xml.children('copyright').text();
+		
+		var records = [];		
+		xml.children('entry').each(function(i, entry) {
+			var record = {
+				title: $(entry).children('title').text(),
+				file: $(entry).children('ref').attr('href'),
+				author: $(entry).children('author').text()
+			};
+			
+			records.push(record);
+		});
+		
+		asxInfo.records = records;
+		return asxInfo;
 	}
 	
 	//API export.
