@@ -43,7 +43,7 @@
 		
 		//Click on a stream to start playing it.
 		$('.stream').click(function() {
-			var plsURL = $(this).attr('data-pls');
+			var fileURL = $(this).attr('data-file');
 			var stationName = $(this).attr('data-station');
 			
 			chrome.browserAction.setTitle({
@@ -52,11 +52,38 @@
 			
 			UI.setSelectedID(this);
 			UI.setSelectedStation(stationName);
+			UI.showBuffering();
 			updateTrack(stationName);
 			
-			UI.showBuffering();
+			//some station URLs are relative. regular and premium
+			//use different domains for some silly reason.	
+			if (di.isPremium) {
+				if (fileURL.indexOf('http://www.di.fm') === -1) {
+					fileURL = 'http://www.di.fm' + fileURL;
+				}
+			}
+			else {
+				if (fileURL.indexOf('http://listen.di.fm') === -1) {
+					fileURL = 'http://listen.di.fm' + fileURL;
+				}
+			}
 			
-			Player.play('http://72.26.204.32:80/trance_hi?79de7d9c99d2de1');
+			$.get(fileURL, function(fileContents) {
+				if (fileURL.indexOf('.pls') !== -1) {
+					var pls = Parser.parse('pls', fileContents);
+					var stream = pls.records[0].file;
+				}
+				else if (fileURL.indexOf('.asx') !== -1) {
+					var asx = Parser.parse('asx', fileContents);
+					var stream = pls.records[0].file;
+				}
+				else {
+					alert('Not sure how to parse file ' + fileUrl);
+					return;
+				}
+				
+				Player.play(stream);
+			}, 'html');
 		});
 		
 		//Resume after pausing.

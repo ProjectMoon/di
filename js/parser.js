@@ -19,7 +19,7 @@ var Parser = (function() {
 		for (var c = 0; c < lines.length; c++) {
 			var line = lines[c];
 			var match = line.match(/^.*(\d)=/);
-			if (match != null) var num = match[1]; //not always used.
+			if (match != null) var num = parseInt(match[1]) - 1; //not always used.
 			
 			var value = line.split('=')[1];
 			

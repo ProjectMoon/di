@@ -9,7 +9,7 @@ var UI = (function() {
 		for (var stream in station.streams) {
 			var streamDiv = $('<div class="stream">' + stream + '</div>');
 			
-			streamDiv.attr('data-pls', station.streams[stream]);
+			streamDiv.attr('data-file', station.streams[stream]);
 			streamDiv.attr('data-station', station.name);
 			
 			var id = station.name.replace(/ /g, '') + stream;

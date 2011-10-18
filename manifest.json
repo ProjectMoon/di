@@ -14,6 +14,7 @@
 	},
 	"background_page": "background.html",
 	"permissions": [
-		"http://www.di.fm/*"
+		"http://www.di.fm/*",
+		"http://listen.di.fm/*"
 	]
 }
