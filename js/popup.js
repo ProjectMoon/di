@@ -15,7 +15,7 @@
 	 */
 	function updateTrack(stationName) {
 		di.getStation(stationName, function(station) {
-			UI.setInfo(station.name, station.playing);
+			UI.setInfo(station.name, station.trackInfo.artist + ' - ' + station.trackInfo.title);
 		});
 	}
 	

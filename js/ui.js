@@ -70,9 +70,9 @@ var UI = (function() {
 	}
 	
 	ui.setInfo = function(station, track) {
-		$('#station').text(station);
+		$('#station').text('');
 		var marquee = $('<marquee></marquee>');
-		marquee.text(track);
+		marquee.text(station + ' :: '  + track);
 		$('#track').empty().append(marquee);
 	}
 	
