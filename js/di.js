@@ -11,8 +11,35 @@ var DI = {};
  * Export the regular or premium API, based on the logged-in
  * user's state.
  */
-DI.exportAPI = function(callback) {
-	callback(DI.__API);
+DI.exportAPI = function(options, callback) {
+	if (typeof callback === 'undefined') {
+		var callback = options;
+		options = {
+			checkLogin: true
+		};
+	}
+	else {
+		if (options.checkLogin === false) {
+			DI.__API.isPremium = options.premiumStatus;
+		}
+	}
+	
+	if (options.checkLogin) {
+		$.get('http://www.di.fm', function(dom) {
+			if ($(':contains(Welcome to DI Premium)', dom).length > 0) {
+				DI.__API.isPremium = true;
+			}
+			else {
+				DI.__API.isPremium = false;
+			}
+			callback(DI.__API);
+		});
+	}
+	else {
+		setTimeout(function() {
+			callback(DI.__API);
+		}, 0);
+	}
 };
 
 /**
@@ -61,12 +88,18 @@ DI.__API = (function() {
 		var nowPlaying = trackData[id];
 		var streams = {};
 		
-		$(li).find('img[alt^="Icon.tunein"]').each(function(i, img) {
+		var selector = 'img[alt^="Icon.tunein"], img[alt^="icon.tunein"]';
+		$(li).find(selector).each(function(i, img) {
 			var alt = $(img).attr('alt');
 			var start = 'Icon.tunein.'.length;
 			var quality = alt.substring(start, alt.indexOf('.', start)) + 'k';
-			var href = $(img).parent().attr('href'); //parent is always the link to the stream
-			streams[quality] = href;
+			
+			//parent is always the link to the stream
+			var href = $(img).parent().attr('href');
+			if (typeof streams[quality] === 'undefined') {
+				streams[quality] = [];
+			}
+			streams[quality].push(href);
 		});
 		
 		return new DI.Core.Station(stationName, nowPlaying, streams);

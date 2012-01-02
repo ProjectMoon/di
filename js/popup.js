@@ -53,6 +53,7 @@
 		$('#refresh').click(function() {
 			delete localStorage['PopupPremiumStatus'];
 			delete localStorage['PopupStationList'];
+			UI.clearStations();
 			main();
 		});
 				
@@ -80,17 +81,9 @@
 			UI.showBuffering();
 			updateTrack(stationName);
 			
-			//some station URLs are relative. regular and premium
-			//use different domains for some silly reason.	
-			if (di.isPremium) {
-				if (fileURL.indexOf('http://www.di.fm') === -1) {
-					fileURL = 'http://www.di.fm' + fileURL;
-				}
-			}
-			else {
-				if (fileURL.indexOf('http://listen.di.fm') === -1) {
-					fileURL = 'http://listen.di.fm' + fileURL;
-				}
+			//some station URLs are relative.
+			if (fileURL.indexOf('http://listen.di.fm') === -1) {
+				fileURL = 'http://listen.di.fm' + fileURL;
 			}
 			
 			$.get(fileURL, function(fileContents) {
@@ -174,14 +167,14 @@
 		var status = localStorage['PopupPremiumStatus'];
 		
 		if (typeof status !== 'undefined') {
-			setTimeout(function() {
-				if (status === 'premium') {
-					callback(DI.__Premium);
-				}
-				else {
-					callback(DI.__Regular);
-				}
-			}, 0);
+			var opts = {
+				checkLogin: false,
+				premiumStatus: (status === 'premium') ? true : false
+			};
+			
+			DI.exportAPI(opts, function(api) {				
+				callback(api);				
+			});
 		}
 		else {
 			DI.exportAPI(function(api) {
