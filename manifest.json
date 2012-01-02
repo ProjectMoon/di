@@ -15,6 +15,7 @@
 	"background_page": "background.html",
 	"permissions": [
 		"http://www.di.fm/*",
-		"http://listen.di.fm/*"
+		"http://listen.di.fm/*",
+		"http://api.v2.audioaddict.com/*"
 	]
 }

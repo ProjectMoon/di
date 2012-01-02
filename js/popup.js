@@ -48,6 +48,7 @@
 				alert(status + ' - ' + errorThrown);
 			}
 		});
+		
 		//Refresh button.
 		$('#refresh').click(function() {
 			delete localStorage['PopupPremiumStatus'];
