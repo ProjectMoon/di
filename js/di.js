@@ -64,7 +64,7 @@ DI.__API = (function() {
 		$(li).find('img[alt^="Icon.tunein"]').each(function(i, img) {
 			var alt = $(img).attr('alt');
 			var start = 'Icon.tunein.'.length;
-			var quality = alt.substring(start, alt.indexOf('.', start));
+			var quality = alt.substring(start, alt.indexOf('.', start)) + 'k';
 			var href = $(img).parent().attr('href'); //parent is always the link to the stream
 			streams[quality] = href;
 		});
